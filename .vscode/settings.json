@@ -1,0 +1,26 @@
+{
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "editor.fontFamily": "'Aptos', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "terminal.integrated.fontFamily": "'Aptos', Menlo, Monaco, 'Courier New', monospace",
+    "terminal.integrated.fontSize": 14,
+    //XML Configuration
+    "editor.wordWrap": "off",
+    "xml.format.maxLineWidth": 999,
+    "xml.format.splitAttributes": "preserve",
+    "xml.format.enforceQuoteStyle": "preferred",
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    },
+    //Java
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": false,
+    "java.format.settings.profile": "GoogleStyle",
+    "java.format.enabled": true,
+    "[java]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "redhat.java"
+    },
+}

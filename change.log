@@ -1,0 +1,36 @@
+Version		|| Descripcion
+=======================================================================================================
+1.0			|| Version inicial con estafeta.
+1.1			|| Se exponen servicio Frecuencia y 'consulta envios' en webservice para estafeta.
+1.2			|| Se incluye BOT DHL para punto activo.
+1.3			|| Se incluye BOT Estafeta para punto activo.
+1.4			|| Se agrega configuracion de carpetas de propiedades por ambiente
+1.5			|| Se incluye servicios Fedex Ship y rate en version webservice usando template de estafeta.
+1.6			|| Se incluye las BusinessRules por cliente.
+1.7			|| Se expone servicio rest para 'carta porte' Fedex.
+1.8			|| Se exponen servicios rest service para fedex 'rate' y 'ship'.
+1.9			|| Se integra el plugin de fedex actualizado con el servicio de createPickup, se expone rest service
+2.0			|| Manejo de formato impresora termica para estafeta
+2.1			|| Se agrega el parametro cuenta en webservice de fedex usado en businessrules
+2.2			|| Se agrega campo account en estafeta para recibir la cuenta a usar para crear la guia.
+2.3			|| Integracion de parametros para envio asegurado en fedex.
+2.4			|| Se incluye el campo cuenta_estafeta a nivel tabla usuarios. Se modifica BR para sadald set account.
+2.5			|| Se incluye el campo cuenta_estafeta_express a nivel tabla usuarios. Se modifica BR para sadald set account.
+2.6			|| Se comenta el servicio de fedex. Se detecta caso de validacion en parte de estafeta
+2.7			|| Algoritmo de rentabilidad para punto activo en br
+2.8			|| Se agrega columna para guardar response, se debera actualizar la tabla guia_integrador para agregar esa columna.
+2.9			|| Se agrega businessrule para after en fedex webservice y guardado de request/response en tabla y archivo fisico
+3.0			|| Integracion de frecuencia cotizador para estafeta en version rest service
+3.1			|| Integracion del campo Isurance y IsuranceValue, que corresponde al seguro para estafeta
+3.2			|| Nueva BR para estafeta alan
+3.3			|| Integracion de etiqueta termica para fedex
+3.4			|| Capa rest service para servicios de estafeta
+3.5			|| Integracion del campo isServiceUsesKilos en estafeta rest.
+3.6			|| Se agrega campo de reexpedicion en estafeta rest.
+3.7			|| Actualizacion de BR ParseServiceType para deteccion de servicio en cuentas directas.
+3.8			|| Integracion de fedex rest api.
+
+
+
+
+
