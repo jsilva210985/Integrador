@@ -1,8 +1,8 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.2 
+// Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2025.12.17 a las 04:15:23 PM CST 
+// Generado el: 2026.04.10 a las 11:29:11 AM CDT 
 //
 
 
@@ -21,64 +21,64 @@ import javax.xml.bind.annotation.XmlType;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType>
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="origenAddress1" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenNeighborhood" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenZipCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenContactName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenState" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenCity" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenAddress2" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenPhoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenExtNum" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenIntNum" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenCorporateName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="origenReference" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address1" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="extNum" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="intNum" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="neighborhood" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="zipCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="contactName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="address2" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="phoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="corporateName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="aditionalInfo" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceTypeId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="content" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="contentDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="numberOfLabels" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="parcelTypeId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="weight" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="height" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="length" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="width" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="paperType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="deliveryToEstafetaOffice" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="client" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="provider" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="via" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="account" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="insurance" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="insuranceValue" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="isServiceUsesKilos" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="reexpedicion" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="alias" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="servicio" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="origenAddress1" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenNeighborhood" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenZipCode" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenContactName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenState" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenCity" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenAddress2" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenPhoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenExtNum" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenIntNum" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenCorporateName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="origenReference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="address1" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="extNum" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="intNum" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="neighborhood" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="zipCode" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="contactName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="state" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="address2" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="phoneNumber" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="corporateName" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="aditionalInfo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="serviceTypeId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="content" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="contentDescription" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="numberOfLabels" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="parcelTypeId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="weight" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="height" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="length" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="width" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="paperType" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="deliveryToEstafetaOffice" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="client" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="provider" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="via" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="account" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="insurance" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="insuranceValue" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="isServiceUsesKilos" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="reexpedicion" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="alias" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="servicio" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

@@ -1,8 +1,8 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.2 
+// Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2025.12.17 a las 04:15:23 PM CST 
+// Generado el: 2026.04.10 a las 11:29:11 AM CDT 
 //
 
 
@@ -34,6 +34,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link EstafetaFrecuenciaCotizadorRequest }
+     * 
+     */
+    public EstafetaFrecuenciaCotizadorRequest createEstafetaFrecuenciaCotizadorRequest() {
+        return new EstafetaFrecuenciaCotizadorRequest();
     }
 
     /**
@@ -101,6 +109,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link EstafetaLabelRequest }
+     * 
+     */
+    public EstafetaLabelRequest createEstafetaLabelRequest() {
+        return new EstafetaLabelRequest();
+    }
+
+    /**
+     * Create an instance of {@link EstafetaLabelResponse }
+     * 
+     */
+    public EstafetaLabelResponse createEstafetaLabelResponse() {
+        return new EstafetaLabelResponse();
+    }
+
+    /**
      * Create an instance of {@link ExecuteQuery }
      * 
      */
@@ -141,91 +165,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link EstafetaFrecuenciaCotizadorRequest }
+     * Create an instance of {@link TipoServicio }
      * 
      */
-    public EstafetaFrecuenciaCotizadorRequest createEstafetaFrecuenciaCotizadorRequest() {
-        return new EstafetaFrecuenciaCotizadorRequest();
-    }
-
-    /**
-     * Create an instance of {@link EstafetaLabelResponse }
-     * 
-     */
-    public EstafetaLabelResponse createEstafetaLabelResponse() {
-        return new EstafetaLabelResponse();
-    }
-
-    /**
-     * Create an instance of {@link EstafetaLabelRequest }
-     * 
-     */
-    public EstafetaLabelRequest createEstafetaLabelRequest() {
-        return new EstafetaLabelRequest();
-    }
-
-    /**
-     * Create an instance of {@link History }
-     * 
-     */
-    public History createHistory() {
-        return new History();
-    }
-
-    /**
-     * Create an instance of {@link TrackingData }
-     * 
-     */
-    public TrackingData createTrackingData() {
-        return new TrackingData();
-    }
-
-    /**
-     * Create an instance of {@link InternationalData }
-     * 
-     */
-    public InternationalData createInternationalData() {
-        return new InternationalData();
-    }
-
-    /**
-     * Create an instance of {@link WaybillReplaceData }
-     * 
-     */
-    public WaybillReplaceData createWaybillReplaceData() {
-        return new WaybillReplaceData();
-    }
-
-    /**
-     * Create an instance of {@link HistoryConfiguration }
-     * 
-     */
-    public HistoryConfiguration createHistoryConfiguration() {
-        return new HistoryConfiguration();
-    }
-
-    /**
-     * Create an instance of {@link PickupData }
-     * 
-     */
-    public PickupData createPickupData() {
-        return new PickupData();
-    }
-
-    /**
-     * Create an instance of {@link Dimensions }
-     * 
-     */
-    public Dimensions createDimensions() {
-        return new Dimensions();
-    }
-
-    /**
-     * Create an instance of {@link MultipleServiceData }
-     * 
-     */
-    public MultipleServiceData createMultipleServiceData() {
-        return new MultipleServiceData();
+    public TipoServicio createTipoServicio() {
+        return new TipoServicio();
     }
 
     /**
@@ -237,11 +181,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReturnDocumentData }
+     * Create an instance of {@link WaybillList }
      * 
      */
-    public ReturnDocumentData createReturnDocumentData() {
-        return new ReturnDocumentData();
+    public WaybillList createWaybillList() {
+        return new WaybillList();
+    }
+
+    /**
+     * Create an instance of {@link HistoryConfiguration }
+     * 
+     */
+    public HistoryConfiguration createHistoryConfiguration() {
+        return new HistoryConfiguration();
     }
 
     /**
@@ -253,11 +205,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ArrayOfHistory }
+     * Create an instance of {@link TrackingData }
      * 
      */
-    public ArrayOfHistory createArrayOfHistory() {
-        return new ArrayOfHistory();
+    public TrackingData createTrackingData() {
+        return new TrackingData();
+    }
+
+    /**
+     * Create an instance of {@link PickupData }
+     * 
+     */
+    public PickupData createPickupData() {
+        return new PickupData();
     }
 
     /**
@@ -269,6 +229,38 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Dimensions }
+     * 
+     */
+    public Dimensions createDimensions() {
+        return new Dimensions();
+    }
+
+    /**
+     * Create an instance of {@link WaybillReplaceData }
+     * 
+     */
+    public WaybillReplaceData createWaybillReplaceData() {
+        return new WaybillReplaceData();
+    }
+
+    /**
+     * Create an instance of {@link ReturnDocumentData }
+     * 
+     */
+    public ReturnDocumentData createReturnDocumentData() {
+        return new ReturnDocumentData();
+    }
+
+    /**
+     * Create an instance of {@link MultipleServiceData }
+     * 
+     */
+    public MultipleServiceData createMultipleServiceData() {
+        return new MultipleServiceData();
+    }
+
+    /**
      * Create an instance of {@link ArrayOfString }
      * 
      */
@@ -277,11 +269,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WaybillList }
+     * Create an instance of {@link InternationalData }
      * 
      */
-    public WaybillList createWaybillList() {
-        return new WaybillList();
+    public InternationalData createInternationalData() {
+        return new InternationalData();
     }
 
     /**
@@ -293,11 +285,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TipoServicio }
+     * Create an instance of {@link ArrayOfHistory }
      * 
      */
-    public TipoServicio createTipoServicio() {
-        return new TipoServicio();
+    public ArrayOfHistory createArrayOfHistory() {
+        return new ArrayOfHistory();
+    }
+
+    /**
+     * Create an instance of {@link History }
+     * 
+     */
+    public History createHistory() {
+        return new History();
     }
 
 }

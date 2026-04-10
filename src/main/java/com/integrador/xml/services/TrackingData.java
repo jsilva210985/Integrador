@@ -1,8 +1,8 @@
 //
-// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.2.7 
-// Visite <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+// Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.2 
+// Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2025.12.17 a las 04:15:23 PM CST 
+// Generado el: 2026.04.10 a las 11:29:11 AM CDT 
 //
 
 
@@ -20,33 +20,33 @@ import javax.xml.bind.annotation.XmlType;
  * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
  * 
  * <pre>
- * &lt;complexType name="TrackingData">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="waybill" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="shortWaybillId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceDescriptionSPA" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="serviceDescriptionENG" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="customerNumber" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="packageType" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="additionalInformation" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="statusSPA" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="statusENG" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="pickupData" type="{http://www.integrador.com/xml/services}PickupData"/>
- *         &lt;element name="deliveryData" type="{http://www.integrador.com/xml/services}DeliveryData"/>
- *         &lt;element name="dimensions" type="{http://www.integrador.com/xml/services}Dimensions"/>
- *         &lt;element name="waybillReplaceData" type="{http://www.integrador.com/xml/services}WaybillReplaceData"/>
- *         &lt;element name="returnDocumentData" type="{http://www.integrador.com/xml/services}ReturnDocumentData"/>
- *         &lt;element name="multipleServiceData" type="{http://www.integrador.com/xml/services}MultipleServiceData"/>
- *         &lt;element name="internationalData" type="{http://www.integrador.com/xml/services}InternationalData"/>
- *         &lt;element name="customerInfo" type="{http://www.integrador.com/xml/services}CustomerInfo"/>
- *         &lt;element name="history" type="{http://www.integrador.com/xml/services}ArrayOfHistory"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="TrackingData"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="waybill" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="shortWaybillId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="serviceId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="serviceDescriptionSPA" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="serviceDescriptionENG" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="customerNumber" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="packageType" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="additionalInformation" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="statusSPA" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="statusENG" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="pickupData" type="{http://www.integrador.com/xml/services}PickupData"/&gt;
+ *         &lt;element name="deliveryData" type="{http://www.integrador.com/xml/services}DeliveryData"/&gt;
+ *         &lt;element name="dimensions" type="{http://www.integrador.com/xml/services}Dimensions"/&gt;
+ *         &lt;element name="waybillReplaceData" type="{http://www.integrador.com/xml/services}WaybillReplaceData"/&gt;
+ *         &lt;element name="returnDocumentData" type="{http://www.integrador.com/xml/services}ReturnDocumentData"/&gt;
+ *         &lt;element name="multipleServiceData" type="{http://www.integrador.com/xml/services}MultipleServiceData"/&gt;
+ *         &lt;element name="internationalData" type="{http://www.integrador.com/xml/services}InternationalData"/&gt;
+ *         &lt;element name="customerInfo" type="{http://www.integrador.com/xml/services}CustomerInfo"/&gt;
+ *         &lt;element name="history" type="{http://www.integrador.com/xml/services}ArrayOfHistory"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 

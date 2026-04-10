@@ -322,7 +322,6 @@ public class LabelController{
 			Configuracion conf = null;
 			if(tipoGuia.equalsIgnoreCase("Express")){
 				conf = configuracionRepository.findByTipoAndServicio("reexpedicion", "express");
-				//conf = service.findByTipoAndServicio();
 			}else{
 				conf = configuracionRepository.findByTipoAndServicio(getReexpedicionValue(kilos), "terrestre");
 			}
@@ -404,11 +403,9 @@ public class LabelController{
 	}
 
 	public GuiaIntegrador saveRequest(JSONObject params) {
-		// Guardado del request
 		String numeroExteriorRemitente = params.optString("origenExtNum", "");
 		String numeroInteriorRemitente = params.optString("origenIntNum", "");
 		String referenceRemitente = params.optString("origenReference", "");
-
 		GuiaIntegrador g = new GuiaIntegrador();
 		g.setRemitenteCalle(params.optString("origenAddress1", ""));
 		g.setRemitenteColonia(params.optString("origenNeighborhood", ""));
