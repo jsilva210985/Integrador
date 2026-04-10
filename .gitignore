@@ -27,4 +27,5 @@ scripts
 /scripts
 .vscode
 .scripts
+src/main/resources/
 
