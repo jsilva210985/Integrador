@@ -3,6 +3,7 @@ package com.integrador.util;
 import java.io.UnsupportedEncodingException;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.KeySpec;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -37,7 +38,7 @@ public class AESAlgorithm {
 		try {
 			byte[] utf8 = str.getBytes("UTF8");
 			byte[] enc = ecipher.doFinal(utf8);
-			return new sun.misc.BASE64Encoder().encode(enc);
+			return Base64.getEncoder().encodeToString(enc);
 		} catch (javax.crypto.BadPaddingException e) {
 		} catch (IllegalBlockSizeException e) {
 		} catch (UnsupportedEncodingException e) {
@@ -47,7 +48,7 @@ public class AESAlgorithm {
 	}
 	public String decrypt(String str) {
 		try {
-			byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+			byte[] dec = Base64.getDecoder().decode(str);
 			byte[] utf8 = dcipher.doFinal(dec);
 			return new String(utf8, "UTF8");
 		} catch (javax.crypto.BadPaddingException e) {

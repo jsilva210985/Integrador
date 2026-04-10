@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.2 
+Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
+Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
+Generado el: 2026.04.10 a las 09:33:23 AM CST 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://www.integrador.com/xml/services">
+    <schemaBindings map="false">
+      <package name="com.integrador.xml.services"/>
+    </schemaBindings>
+    <bindings scd="tns:EstafetaFrecuenciaCotizadorRequest">
+      <class ref="com.integrador.xml.services.EstafetaFrecuenciaCotizadorRequest"/>
+    </bindings>
+    <bindings scd="tns:EstafetaFrecuenciaCotizadorResponse">
+      <class ref="com.integrador.xml.services.EstafetaFrecuenciaCotizadorResponse"/>
+    </bindings>
+    <bindings scd="~tns:TipoEnvio">
+      <class ref="com.integrador.xml.services.TipoEnvio"/>
+    </bindings>
+    <bindings scd="~tns:TipoSer">
+      <class ref="com.integrador.xml.services.TipoSer"/>
+    </bindings>
+    <bindings scd="~tns:Colonia">
+      <class ref="com.integrador.xml.services.Colonia"/>
+    </bindings>
+    <bindings scd="~tns:ModalidadEntrega">
+      <class ref="com.integrador.xml.services.ModalidadEntrega"/>
+    </bindings>
+    <bindings scd="~tns:DiasEntrega">
+      <class ref="com.integrador.xml.services.DiasEntrega"/>
+    </bindings>
+    <bindings scd="~tns:Destino">
+      <class ref="com.integrador.xml.services.Destino"/>
+    </bindings>
+    <bindings scd="~tns:Origen">
+      <class ref="com.integrador.xml.services.Origen"/>
+    </bindings>
+    <bindings scd="tns:EstafetaLabelRequest">
+      <class ref="com.integrador.xml.services.EstafetaLabelRequest"/>
+    </bindings>
+    <bindings scd="tns:EstafetaLabelResponse">
+      <class ref="com.integrador.xml.services.EstafetaLabelResponse"/>
+    </bindings>
+    <bindings scd="tns:ExecuteQuery">
+      <class ref="com.integrador.xml.services.ExecuteQuery"/>
+    </bindings>
+    <bindings scd="~tns:SearchType">
+      <class ref="com.integrador.xml.services.SearchType"/>
+    </bindings>
+    <bindings scd="~tns:SearchConfiguration">
+      <class ref="com.integrador.xml.services.SearchConfiguration"/>
+    </bindings>
+    <bindings scd="tns:ExecuteQueryResponse">
+      <class ref="com.integrador.xml.services.ExecuteQueryResponse"/>
+    </bindings>
+    <bindings scd="~tns:ArrayOfTrackingData">
+      <class ref="com.integrador.xml.services.ArrayOfTrackingData"/>
+    </bindings>
+    <bindings scd="~tns:TipoServicio">
+      <class ref="com.integrador.xml.services.TipoServicio"/>
+    </bindings>
+    <bindings scd="~tns:WaybillRange">
+      <class ref="com.integrador.xml.services.WaybillRange"/>
+    </bindings>
+    <bindings scd="~tns:WaybillList">
+      <class ref="com.integrador.xml.services.WaybillList"/>
+    </bindings>
+    <bindings scd="~tns:HistoryConfiguration">
+      <class ref="com.integrador.xml.services.HistoryConfiguration"/>
+    </bindings>
+    <bindings scd="~tns:Filter">
+      <class ref="com.integrador.xml.services.Filter"/>
+    </bindings>
+    <bindings scd="~tns:TrackingData">
+      <class ref="com.integrador.xml.services.TrackingData"/>
+    </bindings>
+    <bindings scd="~tns:PickupData">
+      <class ref="com.integrador.xml.services.PickupData"/>
+    </bindings>
+    <bindings scd="~tns:DeliveryData">
+      <class ref="com.integrador.xml.services.DeliveryData"/>
+    </bindings>
+    <bindings scd="~tns:Dimensions">
+      <class ref="com.integrador.xml.services.Dimensions"/>
+    </bindings>
+    <bindings scd="~tns:WaybillReplaceData">
+      <class ref="com.integrador.xml.services.WaybillReplaceData"/>
+    </bindings>
+    <bindings scd="~tns:ReturnDocumentData">
+      <class ref="com.integrador.xml.services.ReturnDocumentData"/>
+    </bindings>
+    <bindings scd="~tns:MultipleServiceData">
+      <class ref="com.integrador.xml.services.MultipleServiceData"/>
+    </bindings>
+    <bindings scd="~tns:ArrayOfString">
+      <class ref="com.integrador.xml.services.ArrayOfString"/>
+    </bindings>
+    <bindings scd="~tns:InternationalData">
+      <class ref="com.integrador.xml.services.InternationalData"/>
+    </bindings>
+    <bindings scd="~tns:CustomerInfo">
+      <class ref="com.integrador.xml.services.CustomerInfo"/>
+    </bindings>
+    <bindings scd="~tns:ArrayOfHistory">
+      <class ref="com.integrador.xml.services.ArrayOfHistory"/>
+    </bindings>
+    <bindings scd="~tns:History">
+      <class ref="com.integrador.xml.services.History"/>
+    </bindings>
+  </bindings>
+  <bindings scd="x-schema::tns" xmlns:tns="http://www.integrador.com/xml/fedex/services">
+    <schemaBindings map="false">
+      <package name="com.integrador.xml.fedex.services"/>
+    </schemaBindings>
+    <bindings scd="tns:FedexLabelRequest">
+      <class ref="com.integrador.xml.fedex.services.FedexLabelRequest"/>
+    </bindings>
+    <bindings scd="tns:FedexLabelResponse">
+      <class ref="com.integrador.xml.fedex.services.FedexLabelResponse"/>
+    </bindings>
+    <bindings scd="tns:FedexServiceTypeRequest">
+      <class ref="com.integrador.xml.fedex.services.FedexServiceTypeRequest"/>
+    </bindings>
+    <bindings scd="tns:FedexServiceTypeResponse">
+      <class ref="com.integrador.xml.fedex.services.FedexServiceTypeResponse"/>
+    </bindings>
+  </bindings>
+</bindings>
+

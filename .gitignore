@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/.DS_Store
+
+scripts
+/scripts
+.vscode
+.scripts
+

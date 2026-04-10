@@ -21,21 +21,16 @@ import com.integrador.util.AESAlgorithm;
 */
 @Component
 public class ParseServiceType {
-	
 	static final Logger log = LoggerFactory.getLogger(com.xcustom.alan.businessrules.ParseServiceType.class);
-	
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> run(Map<String,Object> context) {
 		com.integrador.xml.services.EstafetaLabelRequest xmlRequest = (com.integrador.xml.services.EstafetaLabelRequest) context.get("xmlRequest");
 		UsuariosService usuariosService = (UsuariosService) context.get("usuariosService");
-		
 		Map<String,String> values = (Map<String,String>) context.get("account");
 		log.info("\t\tAccount: "+xmlRequest.getAccount());
-		
 		if(xmlRequest.getService() != null && !xmlRequest.getService().isEmpty()){
 			String rawService = xmlRequest.getService().trim();// e.g., "78 [Terrestre]"
 			String serviceNumber = rawService.split("\\s|\\[")[0];// "78"
-			
 			if(xmlRequest.getAccount().startsWith("V2")){
 				if(xmlRequest.getServiceTypeId().equalsIgnoreCase("Terrestre") && !xmlRequest.getService().trim().isEmpty() ) {
 					values.put("service_type_id_terrestre",serviceNumber);
@@ -46,14 +41,12 @@ public class ParseServiceType {
 				}
 				context.put("account", values);
 			}
-			
 			//Reexpedition and direct account.
 			String reexpedicionValue = xmlRequest.getReexpedicion();
 			if("1".equalsIgnoreCase(reexpedicionValue)){
 				AESAlgorithm aes = new AESAlgorithm();
 				UsuarioAlan usuario = usuariosService.findUsuarioAlan(xmlRequest.getClient(), aes.encrypt(xmlRequest.getPassword()));
 				JSONObject cuentas = new JSONObject(usuario.getCuentasEstafeta() == null || usuario.getCuentasEstafeta().isEmpty() ? usuariosService.getJSONDefaultCuentasEstafeta() : usuario.getCuentasEstafeta());
-				
 				if(xmlRequest.getServiceTypeId().equalsIgnoreCase("Terrestre")){
 					if(cuentas.has("tiene_cuentadirecta_reexpedicion_terreste")){
 						if(cuentas.getInt("tiene_cuentadirecta_reexpedicion_terreste")==1){

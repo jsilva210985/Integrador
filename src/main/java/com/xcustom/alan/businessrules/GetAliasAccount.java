@@ -29,7 +29,6 @@ public class GetAliasAccount {
 	public Map<String,Object> run(Map<String,Object> context) {
 		com.integrador.xml.services.EstafetaLabelRequest xmlRequest = (com.integrador.xml.services.EstafetaLabelRequest) context.get("xmlRequest");
 		UsuariosService usuariosService = (UsuariosService) context.get("usuariosService");
- 
 		try{
 			String account = xmlRequest.getAccount();
 			if (account != null && account.startsWith("V2")) {
@@ -72,7 +71,7 @@ public class GetAliasAccount {
 				}
 			}
 		} catch (Exception e) {
-			//log.error("\t\tError processing alias from CuentaEstafetaV2: " + e.getMessage(), e);
+			//
 		}
 		return context;
 	}

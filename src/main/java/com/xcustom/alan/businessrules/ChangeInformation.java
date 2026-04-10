@@ -20,9 +20,7 @@ import com.integrador.services.AtributoService;
 @SuppressWarnings("all")
 @Component
 public class ChangeInformation {
-	
 	static final Logger log = LoggerFactory.getLogger(com.xcustom.alan.businessrules.ChangeInformation.class);
-	
 	public Map<String,Object> run(Map<String,Object> context) {
 		com.integrador.xml.services.EstafetaLabelRequest xmlRequest = (com.integrador.xml.services.EstafetaLabelRequest) context.get("xmlRequest");
 		AtributoService atributoService = (AtributoService) context.get("atributoService");
