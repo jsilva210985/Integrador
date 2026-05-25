@@ -50,3 +50,9 @@ src/test/
 
 # Scripts locales de deploy
 .scripts
+
+.agent
+.agents
+
+.sts4-cache/
+.mvn/wrapper/
