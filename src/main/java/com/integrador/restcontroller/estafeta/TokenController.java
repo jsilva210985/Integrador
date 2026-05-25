@@ -27,7 +27,7 @@ public class TokenController {
 		log.info("");
 		log.info("== Estafeta RestService / Token ==>");
 		JSONObject response = new JSONObject();
-		Map<String,String> params = atributoService.getByTipoInMap("Estafeta_Frecuencia_Cotizador_Rest");
+		Map<String,String> params = atributoService.getByTipoInMap("Estafeta_Frecuencia_Cotizador");
 		String _apiKey = params.get("api_key");
 		String _apiSecret = params.get("api_secret");
 		String _urlToken = params.get("url_token");
