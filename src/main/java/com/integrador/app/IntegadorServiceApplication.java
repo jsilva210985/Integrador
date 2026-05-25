@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	"com.integrador.restcontroller.app",
 	"com.integrador.restcontroller.fedex",
 	"com.integrador.restcontroller.estafeta",
+	"com.integrador.restcontroller.estafetav2",
 	"com.integrador.restcontroller.dhl",
 	"com.xcustom.alan.businessrules",
 	"com.integrador.util"
