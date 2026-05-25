@@ -111,6 +111,12 @@ The application uses a token-based validation layer synchronized with a local da
 | **FedEx Rate** | `/Fedex/Rest/Rate` | Provides cost estimates for different carrier services. |
 | **Carta Porte** | `/Fedex/Rest/CartaPorte` | Handles specialized fiscal documentation for transport. |
 | **Estafeta** | `/Estafeta/...` | Legacy and REST integration for Estafeta services. |
+| **Estafeta V2 Token** | `/EstafetaRest/Token` | Retrieves authorization token for Estafeta V2. |
+| **Estafeta V2 Track** | `/EstafetaRest/Tracking` | Retrieves status and history for waybill(s). |
+| **Estafeta V2 Track Status** | `/EstafetaRest/Tracking/Status` | Retrieves status only for waybill(s). |
+| **Estafeta V2 Track History** | `/EstafetaRest/Tracking/History` | Retrieves history only for waybill(s). |
+| **Estafeta V2 Frequency** | `/EstafetaRest/Frequency` | Queries service availability/frequency (V1-compatible format). |
+| **Estafeta V2 Freq Original** | `/EstafetaRest/Frequency/Original` | Queries service availability/frequency (Original V2 JSON response). |
 
 ---
 
