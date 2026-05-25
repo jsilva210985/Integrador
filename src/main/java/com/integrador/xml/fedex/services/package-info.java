@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.2 
 // Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2026.05.24 a las 02:58:19 PM CDT 
+// Generado el: 2026.05.25 a las 09:12:59 AM CST 
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.integrador.com/xml/fedex/services", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
