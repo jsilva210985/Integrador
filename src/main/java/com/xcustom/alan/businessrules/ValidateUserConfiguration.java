@@ -1,6 +1,4 @@
 package com.xcustom.alan.businessrules;
-import java.io.Console;
-import java.math.BigDecimal;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,13 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.integrador.util.AESAlgorithm;
-import com.integrador.util.Util;
-import com.integrador.carriers.Estafeta;
 import com.integrador.exceptions.BusinessRuleException;
 import com.integrador.models.UsuarioAlan;
 import com.integrador.services.AtributoService;
 import com.integrador.services.UsuariosService;
+import com.integrador.util.AESAlgorithm;
+import com.integrador.util.Util;
 @SuppressWarnings("all")
 @Component
 public class ValidateUserConfiguration {

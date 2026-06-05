@@ -223,12 +223,12 @@
 				<configuration>
 					<excludes>
 
-						<!-- <exclude>**/properties/alan/qa/**</exclude> -->
+						<exclude>**/properties/alan/qa/**</exclude>
 						<exclude>**/properties/alan/prd/**</exclude>
 						<exclude>**/properties/sentpack/**</exclude>
 						<exclude>**/properties/demo/**</exclude>
 						<exclude>**/properties/enviemoslo/**</exclude>
-						<exclude>**/properties/local/**</exclude>
+						<!-- <exclude>**/properties/local/**</exclude> -->
 						<exclude>**/properties/puntoactivo/**</exclude>
 						<exclude>**/properties/sadalv/**</exclude>
 						<!--<exclude>**com/xcustom/alan/businessrules/**</exclude> -->

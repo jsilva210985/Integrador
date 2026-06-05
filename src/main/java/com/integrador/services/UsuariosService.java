@@ -43,10 +43,10 @@ public class UsuariosService {
 		return false;
 	}
 	public com.integrador.models.CuentaEstafetaV2 getCuentaV2(String name){
-		return findByCuentaV2(name);
+		return findByCuentaV2(name != null ? name.trim() : null);
 	}
 	public com.integrador.models.CuentaEstafeta getCuenta(String name){
-		return findByCuenta(name);
+		return findByCuenta(name != null ? name.trim() : null);
 	}
 	public com.integrador.models.CuentaEstafetaV2 findByCuentaV2(String cuenta){
 		return cuentaEstafetaV2Repository.findByCuenta(cuenta);

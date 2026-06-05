@@ -1,13 +1,15 @@
 package com.xcustom.alan.businessrules;
 
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import com.integrador.util.Util;
+
 import com.estafeta.webservice.frecuencia.EstafetaFrecuencia;
 import com.estafeta.webservice.frecuencia.EstafetaFrecuenciaCliente;
 import com.integrador.services.AtributoService;
+import com.integrador.util.Util;
 
 @Component
 public class SetReexpedicion{

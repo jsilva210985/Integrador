@@ -84,10 +84,20 @@ public class GetService {
 		boolean usaKilos = false;
 		String service = "";
 		try {
-			com.integrador.models.CuentaEstafetaV2 cV2 = usuariosService.getCuentaV2(cuentas.getString(cuentaKey));
+			String accountName = cuentas.getString(cuentaKey);
+			com.integrador.models.CuentaEstafetaV2 cV2 = usuariosService.getCuentaV2(accountName != null ? accountName.trim() : "");
+			
 			JSONObject confv2 = new JSONObject(cV2.getConfiguracion());
-			service = cuentas.getString(servicioKey);
-			int servicioBuscado = Integer.parseInt(service);
+			
+			if (cuentas.has(servicioKey)) {
+				service = cuentas.getString(servicioKey);
+			} else if (cuentas.has(fallbackServicioKey)) {
+				service = cuentas.getString(fallbackServicioKey);
+			} else {
+				throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ")");
+			}
+			
+			int servicioBuscado = Integer.parseInt(service.trim());
 			JSONArray servicios = confv2.getJSONArray(tipoServicio);
 			for(int i = 0; i < servicios.length(); i++) {
 				JSONObject servicioObj = servicios.getJSONObject(i);
@@ -96,8 +106,8 @@ public class GetService {
 				}
 			}
 		}catch(Exception e){
-			log.info("\t\tError: "+servicioKey+ " not found in configuration data");
-			throw new BusinessRuleException(1, "Servicio no encontrado. (referenia: "+servicioKey+")");
+			log.info("\t\tError: " + servicioKey + " o " + fallbackServicioKey + " no encontrado en los datos de configuración. " + e.getMessage());
+			throw new BusinessRuleException(1, "Servicio no encontrado. (referencia: " + servicioKey + " o " + fallbackServicioKey + ")");
 		}
 		String useKilos = String.valueOf(usaKilos);
 		String servicio = null;
@@ -106,7 +116,6 @@ public class GetService {
 			servicio = cuentas.getString(servicioKey);
 		}else if (cuentas.has(fallbackServicioKey)) {
 			servicio = cuentas.getString(fallbackServicioKey);
-			//servicioKey = fallbackServicioKey; // actualiza la clave para verificar uso de kilos
 		}
 
 		xmlRequest.setIsServiceUsesKilos(useKilos);
@@ -114,6 +123,6 @@ public class GetService {
 		context.put("xmlRequest", xmlRequest);
 
 		log.info("\t\tIsServiceUsesKilos: " + useKilos);
-		log.info("\t\tService: " + cuentas.getString(servicioKey));
+		log.info("\t\tService: " + servicio);
 	}
 }
