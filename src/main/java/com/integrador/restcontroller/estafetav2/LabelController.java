@@ -175,6 +175,17 @@ public class LabelController {
 			}
 		}
 
+		if (serviceParams.has("isServiceUsesKilos") && !serviceParams.getString("isServiceUsesKilos").trim().equalsIgnoreCase("")) {
+			String isServiceUsesKilosVal = serviceParams.getString("isServiceUsesKilos").trim().toLowerCase();
+			if (!com.integrador.util.Util.isBoolean(isServiceUsesKilosVal)) {
+				error = "Valor incorrecto para isServiceUsesKilos, valor esperado [true,false]";
+				response.put("response_code", -1);
+				response.put("response_description", error);
+				log.info("\t" + error);
+				return new ResponseEntity<String>(response.toString(), headers, HttpStatus.BAD_REQUEST);
+			}
+		}
+
 		GuiaIntegrador g = saveRequest(serviceParams);
 		log.info("\tRequest guardado");
 		AESAlgorithm e = new AESAlgorithm();
@@ -248,7 +259,7 @@ public class LabelController {
 		xmlRequest.setPassword(serviceParams.optString("password", ""));
 		xmlRequest.setToken(serviceParams.optString("token", ""));
 
-		xmlRequest.setIsServiceUsesKilos(serviceParams.optString("isServiceUsesKilos", ""));
+		xmlRequest.setIsServiceUsesKilos(serviceParams.has("isServiceUsesKilos") && !serviceParams.getString("isServiceUsesKilos").trim().isEmpty() ? serviceParams.getString("isServiceUsesKilos").trim() : null);
 		xmlRequest.setService(serviceParams.optString("service", ""));
 		xmlRequest.setProvider("Estafeta");
 		xmlRequest.setVia("Integrador");

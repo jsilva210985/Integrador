@@ -89,21 +89,38 @@ public class GetService {
 			
 			JSONObject confv2 = new JSONObject(cV2.getConfiguracion());
 			
-			if (cuentas.has(servicioKey)) {
-				service = cuentas.getString(servicioKey);
-			} else if (cuentas.has(fallbackServicioKey)) {
-				service = cuentas.getString(fallbackServicioKey);
+			// --- INICIO CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
+			String requestService = xmlRequest.getService();
+			if (requestService != null && !requestService.trim().isEmpty()) {
+				service = requestService;
+				log.info("\t\tService: " + service + " [Request]");
 			} else {
-				throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ")");
+				if (cuentas.has(servicioKey)) {
+					service = cuentas.getString(servicioKey);
+				} else if (cuentas.has(fallbackServicioKey)) {
+					service = cuentas.getString(fallbackServicioKey);
+				} else {
+					throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ")");
+				}
+				log.info("\t\tService: " + service + " [DB]");
 			}
+			// --- FIN CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 			
 			int servicioBuscado = Integer.parseInt(service.trim());
 			JSONArray servicios = confv2.getJSONArray(tipoServicio);
+			boolean servicioEncontrado = false;
 			for(int i = 0; i < servicios.length(); i++) {
 				JSONObject servicioObj = servicios.getJSONObject(i);
 				if(servicioObj.getInt("servicio") == servicioBuscado) {
-					usaKilos =  servicioObj.optInt("usar_kilos", 0) == 1;
+					int usarKilosDB = servicioObj.optInt("usar_kilos", 0);
+					usaKilos = (usarKilosDB == 1);
+					log.info("\t\tDB usar_kilos: " + usarKilosDB + " (Servicio " + servicioBuscado + ")");
+					servicioEncontrado = true;
+					break;
 				}
+			}
+			if (!servicioEncontrado) {
+				log.info("\t\tDB usar_kilos: 0 (Servicio " + servicioBuscado + " no config)");
 			}
 		}catch(Exception e){
 			log.info("\t\tError: " + servicioKey + " o " + fallbackServicioKey + " no encontrado en los datos de configuración. " + e.getMessage());
@@ -112,17 +129,29 @@ public class GetService {
 		String useKilos = String.valueOf(usaKilos);
 		String servicio = null;
 
-		if(cuentas.has(servicioKey)) {
-			servicio = cuentas.getString(servicioKey);
-		}else if (cuentas.has(fallbackServicioKey)) {
-			servicio = cuentas.getString(fallbackServicioKey);
+		// --- INICIO CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
+		String requestServiceFinal = xmlRequest.getService();
+		if (requestServiceFinal != null && !requestServiceFinal.trim().isEmpty()) {
+			servicio = requestServiceFinal;
+		} else {
+			if (cuentas.has(servicioKey)) {
+				servicio = cuentas.getString(servicioKey);
+			} else if (cuentas.has(fallbackServicioKey)) {
+				servicio = cuentas.getString(fallbackServicioKey);
+			}
 		}
+		// --- FIN CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 
-		xmlRequest.setIsServiceUsesKilos(useKilos);
+		String requestUseKilos = xmlRequest.getIsServiceUsesKilos();
+		if (requestUseKilos != null && (requestUseKilos.equalsIgnoreCase("true") || requestUseKilos.equalsIgnoreCase("false"))) {
+			log.info("\t\tIsServiceUsesKilos: " + requestUseKilos + " [Request]");
+		} else {
+			xmlRequest.setIsServiceUsesKilos(useKilos);
+			log.info("\t\tIsServiceUsesKilos: " + useKilos + " [DB]");
+		}
 		xmlRequest.setService(servicio);
 		context.put("xmlRequest", xmlRequest);
 
-		log.info("\t\tIsServiceUsesKilos: " + useKilos);
 		log.info("\t\tService: " + servicio);
 	}
 }
