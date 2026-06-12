@@ -45,6 +45,18 @@ public class SetReexpedicion{
 		try {
 			Map<String, String> params = atributoService.getByTipoInMap("EstafetaRestV2");
 			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetarestv2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("ESTAFETARESTV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("EstafetaV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetav2");
+			}
+			if (params == null || params.isEmpty()) {
 				log.error("No se encontraron atributos de configuracion para EstafetaV2");
 				return null;
 			}

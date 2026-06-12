@@ -1,6 +1,7 @@
 package com.integrador.restcontroller.estafetav2;
 
 import java.util.Map;
+
 import org.estafetav2.authentication.AuthenticatorClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.integrador.services.AtributoService;
 
 @RestController("estafetaTokenControllerV2")
@@ -32,9 +34,21 @@ public class TokenController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		try {
-			Map<String, String> params = atributoService.getByTipoInMap("EstafetaV2");
+			Map<String, String> params = atributoService.getByTipoInMap("EstafetaRestV2");
 			if (params == null || params.isEmpty()) {
-				String errorMsg = "No se encontraron atributos de configuracion para EstafetaV2";
+				params = atributoService.getByTipoInMap("estafetarestv2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("ESTAFETARESTV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("EstafetaV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetav2");
+			}
+			if (params == null || params.isEmpty()) {
+				String errorMsg = "No se encontraron atributos de configuracion para EstafetaRestV2 o EstafetaV2";
 				log.error("\t" + errorMsg);
 				response.put("error", errorMsg);
 				return new ResponseEntity<String>(response.toString(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,10 +74,10 @@ public class TokenController {
 				try {
 					JSONObject jsonObj = new JSONObject(jsonStr);
 					JSONArray authArray = null;
-					if (jsonObj.has("Autenticación")) {
-						authArray = jsonObj.getJSONArray("Autenticación");
-					} else if (jsonObj.has("Autenticacion")) {
-						authArray = jsonObj.getJSONArray("Autenticacion");
+					if (jsonObj.has("FrequencyRest")) {
+						authArray = jsonObj.getJSONArray("FrequencyRest");
+					} else if (jsonObj.has("PullTracking")) {
+						authArray = jsonObj.getJSONArray("PullTracking");
 					}
 					if (authArray != null && authArray.length() > 0) {
 						JSONObject authObj = authArray.getJSONObject(0);

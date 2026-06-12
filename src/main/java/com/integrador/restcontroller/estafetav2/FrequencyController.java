@@ -1,9 +1,11 @@
 package com.integrador.restcontroller.estafetav2;
 
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
-import org.estafetav2.authentication.AuthenticatorClient;
+
 import org.estafetav2.FrequencyRest.FrequencyClient;
+import org.estafetav2.authentication.AuthenticatorClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.integrador.services.AtributoService;
+
+import com.integrador.models.Usuario;
 import com.integrador.repositories.TokenRepository;
 import com.integrador.repositories.UsuarioRepository;
-import com.integrador.models.Usuario;
+import com.integrador.services.AtributoService;
 import com.integrador.util.AESAlgorithm;
 
 @RestController("estafetaFrequencyControllerV2")
@@ -140,7 +143,19 @@ public class FrequencyController {
 			}
 
 			// Cargar configuracion EstafetaV2
-			Map<String, String> params = atributoService.getByTipoInMap("EstafetaV2");
+			Map<String, String> params = atributoService.getByTipoInMap("EstafetaRestV2");
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetarestv2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("ESTAFETARESTV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("EstafetaV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetav2");
+			}
 			if (params == null || params.isEmpty()) {
 				throw new IllegalStateException("No se encontraron atributos de configuracion para EstafetaV2");
 			}

@@ -721,54 +721,13 @@ public class LabelController {
 
 		try {
 			log.info("\tCargando configuración de la API Estafeta V2...");
-			// 1. Intentar cargar desde EstafetaRestV2 (primera entrada del arreglo label/Label)
-			Map<String, String> paramsRestV2 = atributoService.getByTipoInMap("EstafetaRestV2");
-			if (paramsRestV2 == null || paramsRestV2.isEmpty()) {
-				paramsRestV2 = atributoService.getByTipoInMap("estafetarestv2");
-			}
-			if (paramsRestV2 == null || paramsRestV2.isEmpty()) {
-				paramsRestV2 = atributoService.getByTipoInMap("ESTAFETARESTV2");
-			}
-
-			JSONObject credentialsRestV2 = getFirstCredentialsInRestV2(paramsRestV2);
-			if (credentialsRestV2 != null) {
-				log.info("\tConfiguración de API cargada desde EstafetaRestV2");
-				tokenUrl = credentialsRestV2.optString("tokenUrl", null);
-				clientId = credentialsRestV2.optString("clientId", null);
-				clientSecret = credentialsRestV2.optString("clientSecret", null);
-				scope = credentialsRestV2.optString("scope", null);
-				apiKey = credentialsRestV2.optString("apiKey", null);
-				baseUrl = credentialsRestV2.optString("baseUrl", null);
-				if (baseUrl == null) {
-					baseUrl = credentialsRestV2.optString("url", null);
-				}
-			}
-
-			// 2. Fallback a EstafetaV2
-			if (tokenUrl == null || clientId == null || clientSecret == null || scope == null || apiKey == null || baseUrl == null) {
-				Map<String, String> paramsV2 = atributoService.getByTipoInMap("EstafetaV2");
-				if (paramsV2 == null || paramsV2.isEmpty()) {
-					paramsV2 = atributoService.getByTipoInMap("estafetav2");
-				}
-				if (paramsV2 != null && !paramsV2.isEmpty()) {
-					JSONObject credentialsV2 = getFirstCredentialsInRestV2(paramsV2);
-					if (credentialsV2 != null) {
-						log.info("\tConfiguración de API cargada de fallback EstafetaV2");
-						if (tokenUrl == null) tokenUrl = credentialsV2.optString("tokenUrl", null);
-						if (clientId == null) clientId = credentialsV2.optString("clientId", null);
-						if (clientSecret == null) clientSecret = credentialsV2.optString("clientSecret", null);
-						if (scope == null) scope = credentialsV2.optString("scope", null);
-						if (apiKey == null) apiKey = credentialsV2.optString("apiKey", null);
-						if (baseUrl == null) {
-							baseUrl = credentialsV2.optString("baseUrl", null);
-							if (baseUrl == null) {
-								baseUrl = credentialsV2.optString("url", null);
-							}
-						}
-					}
-				}
-			}
-
+			Map<String, String> paramsRestV2 = atributoService.getByTipoInMap(cuenta);
+			tokenUrl = paramsRestV2.get("url_token");
+			clientId = paramsRestV2.get("client_id");
+			clientSecret = paramsRestV2.get("api_secret");
+			scope = paramsRestV2.get("scope");
+			apiKey = paramsRestV2.get("api_key");
+			baseUrl = paramsRestV2.get("url_label_service");
 			if (tokenUrl == null || clientId == null || clientSecret == null || scope == null || apiKey == null || baseUrl == null) {
 				throw new IllegalArgumentException("Faltan parametros requeridos para inicializar la API de Etiquetas V2.");
 			}

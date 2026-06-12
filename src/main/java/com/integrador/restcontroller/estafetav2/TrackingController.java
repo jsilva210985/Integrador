@@ -99,7 +99,19 @@ public class TrackingController {
 				response.put("validation", error);
 				return new ResponseEntity<String>(response.toString(), headers, HttpStatus.BAD_REQUEST);
 			}
-			Map<String, String> params = atributoService.getByTipoInMap("EstafetaV2");
+			Map<String, String> params = atributoService.getByTipoInMap("EstafetaRestV2");
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetarestv2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("ESTAFETARESTV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("EstafetaV2");
+			}
+			if (params == null || params.isEmpty()) {
+				params = atributoService.getByTipoInMap("estafetav2");
+			}
 			if (params == null || params.isEmpty()) {
 				throw new IllegalStateException("No se encontraron atributos de configuracion para EstafetaV2");
 			}
