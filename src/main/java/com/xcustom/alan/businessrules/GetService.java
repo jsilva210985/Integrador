@@ -84,25 +84,39 @@ public class GetService {
 		boolean usaKilos = false;
 		String service = "";
 		try {
-			String accountName = cuentas.getString(cuentaKey);
+			String accountName = "";
+			if (cuentas.has(cuentaKey)) {
+				accountName = cuentas.getString(cuentaKey);
+			}
+			if (accountName == null || accountName.trim().isEmpty()) {
+				accountName = xmlRequest.getAccount();
+				log.info("\t\tcuentaKey '" + cuentaKey + "' vacía o no encontrada. Usando cuenta del request: " + accountName);
+			}
+			xmlRequest.setAccount(accountName);
+
 			com.integrador.models.CuentaEstafetaV2 cV2 = usuariosService.getCuentaV2(accountName != null ? accountName.trim() : "");
-			
+			if (cV2 == null) {
+				throw new Exception("Cuenta V2 [" + accountName + "] no encontrada en base de datos.");
+			}
 			JSONObject confv2 = new JSONObject(cV2.getConfiguracion());
 			
 			// --- INICIO CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 			String requestService = xmlRequest.getService();
-			if (requestService != null && !requestService.trim().isEmpty()) {
+			if (cuentas.has(servicioKey)) {
+				service = cuentas.getString(servicioKey);
+			} else if (cuentas.has(fallbackServicioKey)) {
+				service = cuentas.getString(fallbackServicioKey);
+			}
+
+			if (service == null || service.trim().isEmpty()) {
 				service = requestService;
-				log.info("\t\tService: " + service + " [Request]");
+				log.info("\t\tService '" + servicioKey + "' vacío o no encontrado en DB. Usando service del request: " + service);
 			} else {
-				if (cuentas.has(servicioKey)) {
-					service = cuentas.getString(servicioKey);
-				} else if (cuentas.has(fallbackServicioKey)) {
-					service = cuentas.getString(fallbackServicioKey);
-				} else {
-					throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ")");
-				}
 				log.info("\t\tService: " + service + " [DB]");
+			}
+
+			if (service == null || service.trim().isEmpty()) {
+				throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ") y tampoco se especificó en el request.");
 			}
 			// --- FIN CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 			
@@ -127,20 +141,7 @@ public class GetService {
 			throw new BusinessRuleException(1, "Servicio no encontrado. (referencia: " + servicioKey + " o " + fallbackServicioKey + ")");
 		}
 		String useKilos = String.valueOf(usaKilos);
-		String servicio = null;
-
-		// --- INICIO CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
-		String requestServiceFinal = xmlRequest.getService();
-		if (requestServiceFinal != null && !requestServiceFinal.trim().isEmpty()) {
-			servicio = requestServiceFinal;
-		} else {
-			if (cuentas.has(servicioKey)) {
-				servicio = cuentas.getString(servicioKey);
-			} else if (cuentas.has(fallbackServicioKey)) {
-				servicio = cuentas.getString(fallbackServicioKey);
-			}
-		}
-		// --- FIN CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
+		String servicio = service;
 
 		String requestUseKilos = xmlRequest.getIsServiceUsesKilos();
 		if (requestUseKilos != null && (requestUseKilos.equalsIgnoreCase("true") || requestUseKilos.equalsIgnoreCase("false"))) {
