@@ -185,8 +185,15 @@ public class LabelController{
 
 		xmlRequest.setIsServiceUsesKilos(serviceParams.optString("isServiceUsesKilos", ""));
 		xmlRequest.setService(serviceParams.optString("service", ""));
-		xmlRequest.setProvider("Estafeta");
-		xmlRequest.setVia("Integrador");
+		String via = "Integrador";
+		if (serviceParams.has("via") && !serviceParams.getString("via").trim().isEmpty()) {
+			via = serviceParams.getString("via").trim();
+		} else if (serviceParams.has("Via") && !serviceParams.getString("Via").trim().isEmpty()) {
+			via = serviceParams.getString("Via").trim();
+		} else if (serviceParams.has("VIA") && !serviceParams.getString("VIA").trim().isEmpty()) {
+			via = serviceParams.getString("VIA").trim();
+		}
+		xmlRequest.setVia(via);
 
 		String cuenta = "";
 		if (serviceParams.has("cuenta") && !serviceParams.getString("cuenta").trim().isEmpty()) {
