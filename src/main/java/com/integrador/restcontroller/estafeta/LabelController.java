@@ -188,13 +188,30 @@ public class LabelController{
 		xmlRequest.setProvider("Estafeta");
 		xmlRequest.setVia("Integrador");
 
-		String cuenta = getAccount(
-				g.getRemitenteCP(), 
-				g.getDestinatarioCP(), 
-				xmlRequest.getWeight().toString(), 
-				xmlRequest.getServiceTypeId(), 
-				usuario
+		String cuenta = "";
+		if (serviceParams.has("cuenta") && !serviceParams.getString("cuenta").trim().isEmpty()) {
+			cuenta = serviceParams.getString("cuenta").trim();
+			log.info("\tCuenta obtenida del request JSON (cuenta): " + cuenta);
+		} else if (serviceParams.has("account") && !serviceParams.getString("account").trim().isEmpty()) {
+			cuenta = serviceParams.getString("account").trim();
+			log.info("\tCuenta obtenida del request JSON (account): " + cuenta);
+		} else {
+			try {
+				cuenta = getAccount(
+						g.getRemitenteCP(), 
+						g.getDestinatarioCP(), 
+						xmlRequest.getWeight().toString(), 
+						xmlRequest.getServiceTypeId(), 
+						usuario
 				);
+				log.info("\tCuenta obtenida dinámicamente: " + cuenta);
+			} catch (Exception ex) {
+				log.error("\tError obteniendo la cuenta en LabelV2: " + ex.getMessage(), ex);
+				response.put("response_code", -3);
+				response.put("response_description", "Error obteniendo la cuenta: " + ex.getMessage());
+				return new ResponseEntity<String>(response.toString(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 		xmlRequest.setAccount(cuenta);
 		xmlRequest.setInsurance(serviceParams.optString("insurance", "false"));
 		xmlRequest.setInsuranceValue(serviceParams.optString("insuranceValue", "0.0"));
@@ -220,6 +237,11 @@ public class LabelController{
 			response.put("response_code",code);
 			response.put("response_description",msg);
 			log.error("\t"+bre.getMessage());
+			return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
+		} catch (Exception ex) {
+			log.error("\tError en ejecución de servicio LabelV2: " + ex.getMessage(), ex);
+			response.put("response_code", -4);
+			response.put("response_description", "Error interno en servicio: " + ex.getMessage());
 			return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
 		}
 
@@ -275,7 +297,14 @@ public class LabelController{
 		String kiladaExpress1K = "kilada_express_1kg";
 		String kiladaExpressOtros = "kilada_express_otros";
 		String rangoExpress1K = "rango_express_1kg";
-		int kilos = Integer.parseInt(peso);
+		double pesoDouble = 0.0;
+		try {
+			pesoDouble = Double.parseDouble(peso);
+		} catch (Exception ex) {
+			pesoDouble = 1.0;
+		}
+		int kilos = (int) Math.round(pesoDouble);
+		if (kilos == 0) kilos = 1;
 		JSONObject cuentas = usuario.getCuentasEstafeta()==null ? new JSONObject() : new JSONObject(usuario.getCuentasEstafeta());
 		if(!reexpedicion){
 			if(tipoGuia.equalsIgnoreCase("Terrestre")){

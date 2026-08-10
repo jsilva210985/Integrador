@@ -80,19 +80,35 @@ public class GetService {
 		String servicioKey = "servicio_"+cuentaKey;
 		String fallbackServicioKey = cuentaKey + "_servicio";
 
-		//boolean usaKilos = usuariosService.verificaUsoKilos(cuentas, cuentaKey, servicioKey, tipoServicio);
 		boolean usaKilos = false;
 		String service = "";
 		try {
+			String requestAccount = xmlRequest.getAccount();
 			String accountName = "";
-			if (cuentas.has(cuentaKey)) {
-				accountName = cuentas.getString(cuentaKey);
+
+			if (requestAccount != null && !requestAccount.trim().isEmpty()) {
+				accountName = requestAccount.trim();
+				log.info("\t\tUsando cuenta del request: " + accountName);
+			} else if (cuentas.has(cuentaKey) && !cuentas.getString(cuentaKey).trim().isEmpty()) {
+				accountName = cuentas.getString(cuentaKey).trim();
+				log.info("\t\tcuentaKey '" + cuentaKey + "' encontrada en DB: " + accountName);
 			}
+
 			if (accountName == null || accountName.trim().isEmpty()) {
-				accountName = xmlRequest.getAccount();
+				accountName = requestAccount;
 				log.info("\t\tcuentaKey '" + cuentaKey + "' vacía o no encontrada. Usando cuenta del request: " + accountName);
 			}
 			xmlRequest.setAccount(accountName);
+
+			com.integrador.services.AtributoService atributoService = (com.integrador.services.AtributoService) context.get("atributoService");
+			if (atributoService != null && accountName != null && !accountName.trim().isEmpty()) {
+				Map<String, String> updatedValues = atributoService.getByTipoInMap(accountName);
+				if (updatedValues != null && !updatedValues.isEmpty()) {
+					mapCompatibleKeys(updatedValues);
+					context.put("account", updatedValues);
+					log.info("\t\tContext 'account' cargado para: " + accountName);
+				}
+			}
 
 			com.integrador.models.CuentaEstafetaV2 cV2 = usuariosService.getCuentaV2(accountName != null ? accountName.trim() : "");
 			if (cV2 == null) {
@@ -100,25 +116,21 @@ public class GetService {
 			}
 			JSONObject confv2 = new JSONObject(cV2.getConfiguracion());
 			
-			// --- INICIO CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 			String requestService = xmlRequest.getService();
-			if (cuentas.has(servicioKey)) {
-				service = cuentas.getString(servicioKey);
-			} else if (cuentas.has(fallbackServicioKey)) {
-				service = cuentas.getString(fallbackServicioKey);
-			}
-
-			if (service == null || service.trim().isEmpty()) {
-				service = requestService;
-				log.info("\t\tService '" + servicioKey + "' vacío o no encontrado en DB. Usando service del request: " + service);
-			} else {
+			if (requestService != null && !requestService.trim().isEmpty()) {
+				service = requestService.trim();
+				log.info("\t\tUsando service del request: " + service);
+			} else if (cuentas.has(servicioKey) && !cuentas.getString(servicioKey).trim().isEmpty()) {
+				service = cuentas.getString(servicioKey).trim();
 				log.info("\t\tService: " + service + " [DB]");
+			} else if (cuentas.has(fallbackServicioKey) && !cuentas.getString(fallbackServicioKey).trim().isEmpty()) {
+				service = cuentas.getString(fallbackServicioKey).trim();
+				log.info("\t\tService: " + service + " [DB Fallback]");
 			}
 
 			if (service == null || service.trim().isEmpty()) {
 				throw new Exception("Clave de servicio no encontrada (" + servicioKey + " o " + fallbackServicioKey + ") y tampoco se especificó en el request.");
 			}
-			// --- FIN CAMBIO: RESPETAR SERVICIO DEL REQUEST ---
 			
 			int servicioBuscado = Integer.parseInt(service.trim());
 			JSONArray servicios = confv2.getJSONArray(tipoServicio);
@@ -154,5 +166,33 @@ public class GetService {
 		context.put("xmlRequest", xmlRequest);
 
 		log.info("\t\tService: " + servicio);
+	}
+
+	private void mapCompatibleKeys(Map<String, String> values) {
+		if (values == null) return;
+		if (values.containsKey("customerNumber") && !values.containsKey("customer_number")) {
+			values.put("customer_number", values.get("customerNumber"));
+		}
+		if (values.containsKey("suscriberId") && !values.containsKey("suscriber_id")) {
+			values.put("suscriber_id", values.get("suscriberId"));
+		}
+		if (values.containsKey("salesOrganization") && !values.containsKey("sales_organization")) {
+			values.put("sales_organization", values.get("salesOrganization"));
+		}
+		if (values.containsKey("serviceTypeIdTerrestre") && !values.containsKey("service_type_id_terrestre")) {
+			values.put("service_type_id_terrestre", values.get("serviceTypeIdTerrestre"));
+		}
+		if (values.containsKey("serviceTypeIdExpress") && !values.containsKey("service_type_id_express")) {
+			values.put("service_type_id_express", values.get("serviceTypeIdExpress"));
+		}
+		if (values.containsKey("systemInformationId") && !values.containsKey("system_information_id")) {
+			values.put("system_information_id", values.get("systemInformationId"));
+		}
+		if (values.containsKey("systemInformationName") && !values.containsKey("system_information_name")) {
+			values.put("system_information_name", values.get("systemInformationName"));
+		}
+		if (values.containsKey("systemInformationVersion") && !values.containsKey("system_information_version")) {
+			values.put("system_information_version", values.get("systemInformationVersion"));
+		}
 	}
 }

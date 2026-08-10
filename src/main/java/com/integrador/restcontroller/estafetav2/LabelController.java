@@ -758,8 +758,11 @@ public class LabelController {
 
 		// Determinar formato de etiqueta (Zebra térmico vs PDF carta)
 		String outputType = "FILE_PDF";
-		if (xmlRequest.getPaperType() != null && xmlRequest.getPaperType().trim().equalsIgnoreCase("2")) {
-			outputType = "FILE_THERMAL_SEQUENCE";
+		if (xmlRequest.getPaperType() != null && 
+		    (xmlRequest.getPaperType().trim().equalsIgnoreCase("2") || 
+		     xmlRequest.getPaperType().trim().equalsIgnoreCase("2.0") || 
+		     xmlRequest.getPaperType().trim().toLowerCase().contains("term"))) {
+			outputType = "FILE_PDF_SC";
 		}
 
 		log.info("\tEnviando petición a la API Estafeta V2...");

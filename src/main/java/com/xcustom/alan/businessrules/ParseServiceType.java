@@ -52,12 +52,16 @@ public class ParseServiceType {
 						if(cuentas.getInt("tiene_cuentadirecta_reexpedicion_terreste")==1){
 							log.info("\t\tDirect Account: True");
 							if(cuentas.has("servicio_directo_reexpedicion_terreste")){
-								serviceNumber = cuentas.getString("servicio_directo_reexpedicion_terreste");
-								if("".equalsIgnoreCase(serviceNumber)){
+								String reexpServiceNumber = cuentas.getString("servicio_directo_reexpedicion_terreste");
+								if("".equalsIgnoreCase(reexpServiceNumber)){
 									log.info("\t\t\tservicio_directo_reexpedicion_terreste is empty, service type not changed.");
 								}else {
-									values.put("service_type_id_terrestre",serviceNumber);
-									log.info("\t\t\tService Type: "+serviceNumber);
+									if(xmlRequest.getService() == null || xmlRequest.getService().trim().isEmpty()){
+										values.put("service_type_id_terrestre",reexpServiceNumber);
+										log.info("\t\t\tService Type (Reexpedición DB): "+reexpServiceNumber);
+									} else {
+										log.info("\t\t\tRespetando Service Type del request: "+serviceNumber+" (ignora DB reexpedición "+reexpServiceNumber+")");
+									}
 								}
 							}else {
 								log.info("\t\t\tservicio_directo_reexpedicion_terreste param not found, service type not changed.");
@@ -70,12 +74,16 @@ public class ParseServiceType {
 						if(cuentas.getInt("tiene_cuentadirecta_reexpedicion_express")==1){
 							log.info("\t\tDirect Account: True");
 							if(cuentas.has("servicio_directo_reexpedicion_express")){
-								serviceNumber = cuentas.getString("servicio_directo_reexpedicion_express");
-								if("".equalsIgnoreCase(serviceNumber)){
+								String reexpServiceNumber = cuentas.getString("servicio_directo_reexpedicion_express");
+								if("".equalsIgnoreCase(reexpServiceNumber)){
 									log.info("\t\t\tservicio_directo_reexpedicion_express is empty, service type not changed.");
 								}else{
-									values.put("service_type_id_express",serviceNumber);
-									log.info("\t\t\tService Type: "+serviceNumber);
+									if(xmlRequest.getService() == null || xmlRequest.getService().trim().isEmpty()){
+										values.put("service_type_id_express",reexpServiceNumber);
+										log.info("\t\t\tService Type (Reexpedición DB): "+reexpServiceNumber);
+									} else {
+										log.info("\t\t\tRespetando Service Type del request: "+serviceNumber+" (ignora DB reexpedición "+reexpServiceNumber+")");
+									}
 								}
 							}else{
 								log.info("\t\t\tservicio_directo_reexpedicion_express param not found, service type not changed.");
