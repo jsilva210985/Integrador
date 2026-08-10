@@ -223,8 +223,8 @@
 				<configuration>
 					<excludes>
 
-						<!-- <exclude>**/properties/alan/qa/**</exclude> -->
-						<exclude>**/properties/alan/prd/**</exclude>
+						<exclude>**/properties/alan/qa/**</exclude>
+						<!-- <exclude>**/properties/alan/prd/**</exclude> -->
 						<exclude>**/properties/sentpack/**</exclude>
 						<exclude>**/properties/demo/**</exclude>
 						<exclude>**/properties/enviemoslo/**</exclude>
