@@ -550,9 +550,11 @@ public class LabelController {
 		}
 		serviceConfiguration.setSalesOrganization(salesOrg);
 		serviceConfiguration.setServiceTypeId(serviceId);
-		if (xmlRequest.getIsServiceUsesKilos() != null) {
-			serviceConfiguration.setIsServiceUsesKilos(xmlRequest.getIsServiceUsesKilos());
+		String isUsesKilos = xmlRequest.getIsServiceUsesKilos();
+		if (isUsesKilos == null || isUsesKilos.trim().isEmpty()) {
+			isUsesKilos = "false";
 		}
+		serviceConfiguration.setIsServiceUsesKilos(isUsesKilos);
 
 		// Dirección Origen
 		String _addressOrigen = Util.removeAccents(xmlRequest.getOrigenAddress1());
@@ -727,16 +729,58 @@ public class LabelController {
 		String baseUrl = null;
 
 		try {
-			log.info("\tCargando configuración de la API Estafeta V2...");
+			log.info("\tCargando configuración de la API Estafeta V2 para cuenta [" + cuenta + "]...");
 			Map<String, String> paramsRestV2 = atributoService.getByTipoInMap(cuenta);
-			tokenUrl = paramsRestV2.get("url_token");
-			clientId = paramsRestV2.get("client_id");
-			clientSecret = paramsRestV2.get("api_secret");
-			scope = paramsRestV2.get("scope");
-			apiKey = paramsRestV2.get("api_key");
-			baseUrl = paramsRestV2.get("url_label_service");
-			if (tokenUrl == null || clientId == null || clientSecret == null || scope == null || apiKey == null || baseUrl == null) {
-				throw new IllegalArgumentException("Faltan parametros requeridos para inicializar la API de Etiquetas V2.");
+			if (paramsRestV2 == null || paramsRestV2.isEmpty()) {
+				log.info("\tAtributos para cuenta [" + cuenta + "] no encontrados. Buscando fallback EstafetaRestV2 / Estafeta_Label_Rest...");
+				paramsRestV2 = atributoService.getByTipoInMap("EstafetaRestV2");
+				if (paramsRestV2 == null || paramsRestV2.isEmpty()) {
+					paramsRestV2 = atributoService.getByTipoInMap("Estafeta_Label_Rest");
+				}
+			}
+
+			// Intentar extraer credenciales si están almacenadas como JSON dentro de la tabla de atributos
+			JSONObject jsonConfig = getFirstCredentialsInRestV2(paramsRestV2);
+			if (jsonConfig != null) {
+				tokenUrl = jsonConfig.optString("tokenUrl", jsonConfig.optString("url_token", jsonConfig.optString("urlToken", null)));
+				clientId = jsonConfig.optString("clientId", jsonConfig.optString("client_id", null));
+				clientSecret = jsonConfig.optString("clientSecret", jsonConfig.optString("api_secret", jsonConfig.optString("client_secret", jsonConfig.optString("apiSecret", null))));
+				scope = jsonConfig.optString("scope", null);
+				apiKey = jsonConfig.optString("apiKey", jsonConfig.optString("api_key", jsonConfig.optString("apikey", null)));
+				baseUrl = jsonConfig.optString("urlLabelService", jsonConfig.optString("url_label_service", jsonConfig.optString("url_label", jsonConfig.optString("url", null))));
+			}
+
+			// Buscar en el Map de clave/valor directo si aún falta alguna propiedad
+			if (tokenUrl == null && paramsRestV2 != null) {
+				tokenUrl = getParamValue(paramsRestV2, "url_token", "tokenUrl", "urlToken");
+			}
+			if (clientId == null && paramsRestV2 != null) {
+				clientId = getParamValue(paramsRestV2, "client_id", "clientId");
+			}
+			if (clientSecret == null && paramsRestV2 != null) {
+				clientSecret = getParamValue(paramsRestV2, "api_secret", "client_secret", "clientSecret", "apiSecret");
+			}
+			if (scope == null && paramsRestV2 != null) {
+				scope = getParamValue(paramsRestV2, "scope");
+			}
+			if (scope == null || scope.trim().isEmpty()) {
+				scope = "https://api.estafeta.com/.default";
+			}
+			if (apiKey == null && paramsRestV2 != null) {
+				apiKey = getParamValue(paramsRestV2, "api_key", "apiKey", "apikey");
+			}
+			if (baseUrl == null && paramsRestV2 != null) {
+				baseUrl = getParamValue(paramsRestV2, "url_label_service", "urlLabelService", "url_label", "url");
+			}
+
+			if (tokenUrl == null || clientId == null || clientSecret == null || apiKey == null || baseUrl == null) {
+				String missing = "";
+				if (tokenUrl == null) missing += "[url_token/tokenUrl] ";
+				if (clientId == null) missing += "[client_id/clientId] ";
+				if (clientSecret == null) missing += "[api_secret/clientSecret] ";
+				if (apiKey == null) missing += "[api_key/apiKey] ";
+				if (baseUrl == null) missing += "[url_label_service/url] ";
+				throw new IllegalArgumentException("Faltan parámetros requeridos para inicializar la API V2 en la cuenta [" + cuenta + "]: " + missing);
 			}
 
 		} catch (Exception ex) {
@@ -1146,6 +1190,16 @@ public class LabelController {
 			return root;
 		} catch (Exception e) {
 			log.error("Error al procesar JSON en getFirstCredentialsInRestV2: " + e.getMessage());
+		}
+		return null;
+	}
+
+	private String getParamValue(Map<String, String> map, String... keys) {
+		if (map == null || keys == null) return null;
+		for (String key : keys) {
+			if (map.containsKey(key) && map.get(key) != null && !map.get(key).trim().isEmpty()) {
+				return map.get(key).trim();
+			}
 		}
 		return null;
 	}

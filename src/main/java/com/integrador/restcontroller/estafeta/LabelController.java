@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,231 +41,19 @@ public class LabelController{
 	@Autowired GuiaIntegradorRepository guiasIntegradorRepository;
 	@Autowired ConfiguracionRepository configuracionRepository;
 
+	@Autowired
+	@Qualifier("estafetaLabelControllerV2")
+	com.integrador.restcontroller.estafetav2.LabelController labelControllerV2;
+
 	@Value("${estafeta.restservice.br.beforesend}") String beforeSendBR;
 
 	static final Logger log = LoggerFactory.getLogger(LabelController.class);
 
 	@PostMapping(value = "/LabelV2")
 	public ResponseEntity<String> labelv2(HttpServletRequest request, @RequestBody String content) throws Exception{
-
-		JSONObject response = new JSONObject();
-		JSONObject serviceParams = new JSONObject();
-		String error = "";
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
 		log.info("");
-		log.info("== Estafeta RestService / Label ==>");
-		try {
-			serviceParams = new JSONObject(content);
-		}catch (Exception e) {
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		if(!serviceParams.has("client") || serviceParams.getString("client").trim().equalsIgnoreCase("")){
-			error = "Debe especificar el cliente";
-			response.put("response_code", -1);
-			response.put("response_description",error);
-			log.info("\t"+error);
-			return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-		}
-		if(!serviceParams.has("password") || serviceParams.getString("password").trim().equalsIgnoreCase("")){
-			error = "Debe especificar la contraseña";
-			response.put("response_code", -1);
-			response.put("response_description",error);
-			log.info("\t"+error);
-			return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-		}
-
-		if(!serviceParams.has("token") || serviceParams.getString("token").trim().equalsIgnoreCase("")){
-			error = "Debe especificar el token";
-			response.put("response_code", -1);
-			response.put("response_description",error);
-			log.info("\t"+error);
-			return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-		}
-		if(serviceParams.has("insurance") && !serviceParams.getString("insurance").trim().equalsIgnoreCase("")){
-			String insurance = serviceParams.getString("insurance").trim().toLowerCase();
-			if(!com.integrador.util.Util.isBoolean(insurance)){
-				error = "Valor incorrecto para Isurance, valor esperado [true,false]";
-				response.put("response_code", -1);
-				response.put("response_description",error);
-				log.info("\t"+error);
-				return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-			}
-			//Si es true, se valida que contenga el nodo insuranceValue
-			if(insurance.equalsIgnoreCase("true")){
-				String insuranceValue = serviceParams.has("insuranceValue") ? String.valueOf(serviceParams.get("insuranceValue")).trim() : "";
-				if(insuranceValue.equalsIgnoreCase("")){
-					error = "Debe especificar InsuranceValue";
-					response.put("response_code", -1);
-					response.put("response_description",error);
-					log.info("\t"+error);
-					return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-				}
-				if(!com.integrador.util.Util.isStringNumeric(insuranceValue) ){
-					error = "Valor incorrecto para isuranceValue, Patron: '\\d{1,6}.\\d{1,6}'";
-					response.put("response_code", -1);
-					response.put("response_description",error);
-					log.info("\t"+error);
-					return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-				}
-			}
-		}
-		GuiaIntegrador g = saveRequest(serviceParams);
-		log.info("\tRequest guardado");
-		AESAlgorithm e = new AESAlgorithm();
-		UsuarioAlan usuario = usuarioAlanRepository.findByUsuarioAndContrasena(serviceParams.getString("client"), e.encrypt(serviceParams.getString("password")));
-		if(usuario==null) {
-			error = "Usuario o Contraseña invalido";
-			response.put("response_code", -1);
-			response.put("response_description",error);
-			log.info("\t"+error);
-			g.setEstatus(error);
-			g = guiasIntegradorRepository.save(g);
-			return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-		}
-		com.integrador.models.Token token = tokenRepository.findByIdUsuarioAndToken(usuario.getIdUsuario(), serviceParams.getString("token"));
-		if(token==null) {
-			error = "Token invalido";
-			response.put("response_code", -2);
-			response.put("response_description",error);
-			log.info("\t"+error);
-			g.setEstatus(error);
-			guiasIntegradorRepository.save(g);
-			return new ResponseEntity<String>(response.toString(),headers, HttpStatus.BAD_REQUEST);
-		}
-
-		com.integrador.xml.services.EstafetaLabelRequest xmlRequest = new com.integrador.xml.services.EstafetaLabelRequest();
-		com.integrador.xml.services.EstafetaLabelResponse xmlResponse = new com.integrador.xml.services.EstafetaLabelResponse();
-
-		// Remitente
-		xmlRequest.setOrigenAddress1(serviceParams.optString("origenAddress1", ""));
-		xmlRequest.setOrigenNeighborhood(serviceParams.optString("origenNeighborhood", ""));
-		xmlRequest.setOrigenZipCode(serviceParams.optString("origenZipCode", ""));
-		xmlRequest.setOrigenContactName(serviceParams.optString("origenContactName", ""));
-		xmlRequest.setOrigenState(serviceParams.optString("origenState", ""));
-		xmlRequest.setOrigenCity(serviceParams.optString("origenCity", ""));
-		xmlRequest.setOrigenAddress2(serviceParams.optString("origenAddress2", ""));
-		xmlRequest.setOrigenPhoneNumber(serviceParams.optString("origenPhoneNumber", ""));
-		xmlRequest.setOrigenExtNum(serviceParams.optString("origenExtNum", ""));
-		xmlRequest.setOrigenIntNum(serviceParams.optString("origenIntNum", ""));
-		xmlRequest.setOrigenCorporateName(serviceParams.optString("origenCorporateName", ""));
-		xmlRequest.setOrigenReference(serviceParams.optString("origenReference", ""));
-
-		// Destinatario
-		xmlRequest.setAddress1(serviceParams.optString("address1", ""));
-		xmlRequest.setExtNum(serviceParams.optString("extNum", ""));
-		xmlRequest.setIntNum(serviceParams.optString("intNum", ""));
-		xmlRequest.setNeighborhood(serviceParams.optString("neighborhood", ""));
-		xmlRequest.setZipCode(serviceParams.optString("zipCode", ""));
-		xmlRequest.setContactName(serviceParams.optString("contactName", ""));
-		xmlRequest.setState(serviceParams.optString("state", ""));
-		xmlRequest.setCity(serviceParams.optString("city", ""));
-		xmlRequest.setAddress2(serviceParams.optString("address2", ""));
-		xmlRequest.setPhoneNumber(serviceParams.optString("phoneNumber", ""));
-		xmlRequest.setCorporateName(serviceParams.optString("corporateName", ""));
-		xmlRequest.setReference(serviceParams.optString("reference", ""));
-
-		// Información adicional
-		xmlRequest.setAditionalInfo(serviceParams.optString("aditionalInfo", ""));
-		xmlRequest.setServiceTypeId(serviceParams.optString("serviceTypeId", ""));
-		xmlRequest.setContent(serviceParams.optString("content", ""));
-		xmlRequest.setContentDescription(serviceParams.optString("contentDescription", ""));
-		xmlRequest.setNumberOfLabels(serviceParams.optString("numberOfLabels", "1"));
-		xmlRequest.setParcelTypeId(serviceParams.optString("parcelTypeId", ""));
-		xmlRequest.setWeight(serviceParams.optString("weight", "0.0"));
-		xmlRequest.setHeight(serviceParams.optString("height", "0.0"));
-		xmlRequest.setLength(serviceParams.optString("length", "0.0"));
-		xmlRequest.setWidth(serviceParams.optString("width", "0.0"));
-		xmlRequest.setPaperType(serviceParams.optString("paperType", ""));
-		xmlRequest.setDeliveryToEstafetaOffice(serviceParams.optString("deliveryToEstafetaOffice", "false"));
-		xmlRequest.setClient(serviceParams.optString("client", ""));
-		xmlRequest.setPassword(serviceParams.optString("password", ""));
-		xmlRequest.setToken(serviceParams.optString("token", ""));
-
-		xmlRequest.setIsServiceUsesKilos(serviceParams.optString("isServiceUsesKilos", ""));
-		xmlRequest.setService(serviceParams.optString("service", ""));
-		String via = "Integrador";
-		if (serviceParams.has("via") && !serviceParams.getString("via").trim().isEmpty()) {
-			via = serviceParams.getString("via").trim();
-		} else if (serviceParams.has("Via") && !serviceParams.getString("Via").trim().isEmpty()) {
-			via = serviceParams.getString("Via").trim();
-		} else if (serviceParams.has("VIA") && !serviceParams.getString("VIA").trim().isEmpty()) {
-			via = serviceParams.getString("VIA").trim();
-		}
-		xmlRequest.setVia(via);
-
-		String cuenta = "";
-		if (serviceParams.has("cuenta") && !serviceParams.getString("cuenta").trim().isEmpty()) {
-			cuenta = serviceParams.getString("cuenta").trim();
-			log.info("\tCuenta obtenida del request JSON (cuenta): " + cuenta);
-		} else if (serviceParams.has("account") && !serviceParams.getString("account").trim().isEmpty()) {
-			cuenta = serviceParams.getString("account").trim();
-			log.info("\tCuenta obtenida del request JSON (account): " + cuenta);
-		} else {
-			try {
-				cuenta = getAccount(
-						g.getRemitenteCP(), 
-						g.getDestinatarioCP(), 
-						xmlRequest.getWeight().toString(), 
-						xmlRequest.getServiceTypeId(), 
-						usuario
-				);
-				log.info("\tCuenta obtenida dinámicamente: " + cuenta);
-			} catch (Exception ex) {
-				log.error("\tError obteniendo la cuenta en LabelV2: " + ex.getMessage(), ex);
-				response.put("response_code", -3);
-				response.put("response_description", "Error obteniendo la cuenta: " + ex.getMessage());
-				return new ResponseEntity<String>(response.toString(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-		xmlRequest.setAccount(cuenta);
-		xmlRequest.setInsurance(serviceParams.optString("insurance", "false"));
-		xmlRequest.setInsuranceValue(serviceParams.optString("insuranceValue", "0.0"));
-		log.info("\tInvocation Type: RestService");
-		Map<String,String> values = atributoService.getByTipoInMap(cuenta);
-		if(values.isEmpty())
-			values = atributoService.getByTipoInMap("Estafeta_Label_Rest");
-
-		com.integrador.carriers.Estafeta estafeta = new com.integrador.carriers.Estafeta();
-		estafeta.setAccount(values);
-		estafeta.setXmlRequest(xmlRequest);
-		estafeta.setXmlResponse(xmlResponse);
-		estafeta.setGuiaIntegradorRepository(guiasIntegradorRepository);
-		estafeta.setGuiaIntegrador(g);
-		estafeta.setAtributoService(atributoService);
-		estafeta.setUsuariosService(usuariosService);
-		estafeta.setBusinessRuleBeforeSend(beforeSendBR);
-		try{
-			xmlResponse = (com.integrador.xml.services.EstafetaLabelResponse) estafeta.executeRestService();
-		}catch(BusinessRuleException bre){
-			String msg = bre.getMessage();
-			int code = bre.getCode();
-			response.put("response_code",code);
-			response.put("response_description",msg);
-			log.error("\t"+bre.getMessage());
-			return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
-		} catch (Exception ex) {
-			log.error("\tError en ejecución de servicio LabelV2: " + ex.getMessage(), ex);
-			response.put("response_code", -4);
-			response.put("response_description", "Error interno en servicio: " + ex.getMessage());
-			return new ResponseEntity<>(response.toString(), headers, HttpStatus.OK);
-		}
-
-		if(xmlResponse.getFile()!=null)
-			response.put("file", xmlResponse.getFile());
-
-		if(xmlResponse.getResponseCode()!=null)
-			response.put("response_code", xmlResponse.getResponseCode());
-
-		if(xmlResponse.getResponseDescription()!=null)
-			response.put("response_description", xmlResponse.getResponseDescription());
-
-		if(xmlResponse.getTracking()!=null)
-			response.put("tracking", xmlResponse.getTracking());
-
-		return new ResponseEntity<String>(response.toString(),headers, HttpStatus.OK);
+		log.info("== Triangulando petición /Estafeta/LabelV2 -> EstafetaRest V2 ==");
+		return labelControllerV2.labelv3(request, content);
 	}
 
 	public String getAccount(String origen, String destino, String peso, String tipoGuia, UsuarioAlan usuario) throws Exception, IOException{
